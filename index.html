@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;"
+  >
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>ReconBrowser</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+
+    <div class="brand">
+      <div class="logo">R</div>
+
+      <div class="brand-text">
+        <span class="brand-name">
+          RECON
+        </span>
+
+        <span class="brand-browser">
+          BROWSER
+        </span>
+      </div>
+    </div>
+
+
+    <div class="navigation">
+
+      <button
+        id="backButton"
+        class="nav-button"
+      >
+        ←
+      </button>
+
+      <button
+        id="forwardButton"
+        class="nav-button"
+      >
+        →
+      </button>
+
+      <button
+        id="reloadButton"
+        class="nav-button"
+      >
+        ↻
+      </button>
+
+      <button
+        id="homeButton"
+        class="nav-button"
+      >
+        ⌂
+      </button>
+
+    </div>
+
+
+    <div class="address-wrapper">
+
+      <span
+        id="securityIndicator"
+        class="security-indicator"
+      >
+        ●
+      </span>
+
+      <input
+        id="addressBar"
+        type="text"
+        placeholder="Search or enter URL"
+        autocomplete="off"
+        spellcheck="false"
+      >
+
+      <button
+        id="goButton"
+        class="go-button"
+      >
+        GO
+      </button>
+
+    </div>
+
+
+    <button
+      id="devToolsButton"
+      class="dev-button"
+    >
+      DEV
+    </button>
+
+  </header>
+
+
+  <main class="workspace">
+
+    <section class="browser-area">
+
+      <div
+        id="loadingBar"
+        class="loading-bar"
+      ></div>
+
+      <webview
+        id="browserView"
+        src="https://www.google.com"
+        partition="persist:reconbrowser"
+        allowpopups
+      ></webview>
+
+    </section>
+
+
+    <section
+      id="networkPanel"
+      class="tool-panel"
+    >
+
+      <div class="tool-panel-header">
+
+        <div class="tool-panel-title">
+          NETWORK
+
+          <span id="requestCount">
+            0 REQUESTS
+          </span>
+        </div>
+
+
+        <div class="panel-actions">
+
+          <button
+            id="clearNetworkButton"
+            class="danger-button"
+          >
+            CLEAR
+          </button>
+
+          <button
+            id="closeNetworkButton"
+            class="close-button"
+          >
+            ▼
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="network-content">
+
+        <div class="request-list">
+
+          <div class="request-table-header">
+            <span>METHOD</span>
+            <span>STATUS</span>
+            <span>TYPE</span>
+            <span>URL</span>
+          </div>
+
+          <div id="requestRows"></div>
+
+        </div>
+
+
+        <div class="request-details">
+
+          <div class="details-title">
+            REQUEST DETAILS
+          </div>
+
+          <div
+            id="detailsContent"
+            class="details-content"
+          >
+            Select a request
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section
+      id="interceptorPanel"
+      class="tool-panel"
+    >
+
+      <div class="tool-panel-header">
+
+        <div class="tool-panel-title">
+
+          INTERCEPTOR
+
+          <span
+            id="interceptorStateText"
+            class="interceptor-off-text"
+          >
+            OFF
+          </span>
+
+          <span id="interceptorQueueCount">
+            0 HELD
+          </span>
+
+        </div>
+
+
+        <div class="panel-actions">
+
+          <button
+            id="forwardAllButton"
+            class="action-button"
+          >
+            FORWARD ALL
+          </button>
+
+          <button
+            id="closeInterceptorButton"
+            class="close-button"
+          >
+            ▼
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="interceptor-content">
+
+        <div class="interceptor-sidebar">
+
+          <div class="interceptor-control">
+
+            <span>
+              INTERCEPT REQUESTS
+            </span>
+
+            <button
+              id="interceptorSwitch"
+              class="interceptor-switch"
+            >
+              OFF
+            </button>
+
+          </div>
+
+
+          <div class="interceptor-control">
+
+            <span>SCOPE</span>
+
+            <div>
+
+              <button
+                id="currentHostScopeButton"
+                class="action-button"
+              >
+                CURRENT HOST
+              </button>
+
+              <button
+                id="allHostsScopeButton"
+                class="action-button"
+              >
+                ALL HOSTS
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="held-title">
+            HELD REQUESTS
+          </div>
+
+          <div id="heldRequestRows"></div>
+
+        </div>
+
+
+        <div class="interceptor-editor">
+
+          <div class="editor-title">
+            RAW REQUEST
+          </div>
+
+          <textarea
+            id="rawRequestEditor"
+            spellcheck="false"
+            placeholder="No intercepted request selected"
+          ></textarea>
+
+
+          <div class="editor-actions">
+
+            <button
+              id="forwardRequestButton"
+              class="forward-button"
+              disabled
+            >
+              FORWARD
+            </button>
+
+            <button
+              id="dropRequestButton"
+              class="drop-button"
+              disabled
+            >
+              DROP
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <div class="panel-toolbar">
+
+    <button
+      id="networkToggleButton"
+      class="panel-toggle-button"
+    >
+
+      <span class="green-dot">●</span>
+
+      NETWORK
+
+      <span
+        id="networkBadge"
+        class="tool-badge"
+      >
+        0
+      </span>
+
+      <span id="networkArrow">
+        ▲
+      </span>
+
+    </button>
+
+
+    <div class="toolbar-divider"></div>
+
+
+    <button
+      id="interceptorToggleButton"
+      class="panel-toggle-button"
+    >
+
+      <span
+        id="interceptorDot"
+        class="interceptor-dot"
+      >
+        ●
+      </span>
+
+      INTERCEPT
+
+      <span
+        id="interceptorBadge"
+        class="tool-badge"
+      >
+        OFF
+      </span>
+
+      <span id="interceptorArrow">
+        ▲
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <footer class="statusbar">
+
+    <div id="statusText">
+      READY
+    </div>
+
+    <div class="status-right">
+
+      <span id="pageStatus">
+        IDLE
+      </span>
+
+      <span>|</span>
+
+      <span>
+        RECONBROWSER v1.0
+      </span>
+
+    </div>
+
+  </footer>
+
+</div>
+
+
+<script src="renderer.js"></script>
+
+</body>
+
+</html>
