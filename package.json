@@ -1,14 +1,46 @@
 {
   "name": "reconbrowser",
-  "version": "1.0.0",
-  "description": "Security research browser for authorized testing",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron ."
+  "productName": "ReconBrowser",
+  "version": "2.0.0",
+  "description": "ReconBrowser - A Browser Built for Cyber Security Professionals",
+  "author": {
+    "name": "Sumit Kumar"
   },
-  "author": "Sumit Kumar",
+  "main": "main.js",
   "license": "MIT",
+  "private": true,
+
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "clean": "rm -rf node_modules package-lock.json",
+    "reinstall": "npm run clean && npm install",
+    "check": "node --check main.js && node --check preload.js && node --check renderer.js && node --check core/networkCapture.js && node --check interceptor/interceptorStore.js && node --check interceptor/interceptorServer.js && node --check store/requestStore.js"
+  },
+
+  "dependencies": {
+    "electron-store": "^10.1.0"
+  },
+
   "devDependencies": {
-    "electron": "^37.2.0"
-  }
+    "electron": "^43.0.0"
+  },
+
+  "engines": {
+    "node": ">=22.0.0"
+  },
+
+  "keywords": [
+    "browser",
+    "electron",
+    "cybersecurity",
+    "pentesting",
+    "proxy",
+    "interceptor",
+    "repeater",
+    "scanner",
+    "network",
+    "security",
+    "reconbrowser"
+  ]
 }
